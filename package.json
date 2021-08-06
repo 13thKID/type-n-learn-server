@@ -1,0 +1,41 @@
+{
+  "name": "server",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "nodemon ./src/app.js; google-chrome http://localhost:8081",
+    "remigrate": "cd ./src; sequelize db:migrate:undo:all; sequelize db:migrate",
+    "seed": "cd ./src; sequelize db:seed:all",
+    "seed:undo": "cd ./src; sequelize db:seed:undo:all",
+    "reseed": "npm run seed:undo; npm run seed",
+    "setup-db": "bash -c './scripts/PHPmyAdminSetup.sh'"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "bcrypt": "^5.0.1",
+    "bluebird": "^3.7.2",
+    "body-parser": "^1.19.0",
+    "chalk": "^4.1.2",
+    "cors": "^2.8.5",
+    "express": "^4.17.1",
+    "joi": "^17.4.1",
+    "jsonwebtoken": "^8.5.1",
+    "lodash": "^4.17.21",
+    "morgan": "^1.10.0",
+    "mysql2": "^2.2.5",
+    "sequelize": "^6.6.5",
+    "slugify": "^1.6.0",
+    "strip-json-comments": "^3.1.1"
+  },
+  "devDependencies": {
+    "eslint": "^7.31.0",
+    "eslint-config-standard": "^16.0.3",
+    "eslint-plugin-import": "^2.23.4",
+    "eslint-plugin-node": "^11.1.0",
+    "eslint-plugin-promise": "^5.1.0",
+    "nodemon": "^2.0.12"
+  }
+}

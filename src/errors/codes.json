@@ -1,0 +1,29 @@
+{
+  /* Auth */
+  "invalid-token": {
+    "status": 401,
+    "message": "The token invalid or has expired"
+  },
+  "invalid-auth-header": {
+    "status": 401,
+    "message": "Authorization header is invalid"
+  },
+  "no-auth-header": {
+    "status": 401,
+    "message": "Auhorization header is not present"
+  },
+  /* Model: Set */
+  "set-unknown-error": {
+    "status": 500,
+    "message": "The error occured when trying to fetch the public sets"
+  },
+  /* Model: User */
+  "user-unknown-error": {
+    "status": 400,
+    "message": "The unknown error occured when trying to create a user"
+  },
+  "user-email-already-used": {
+    "status": 400,
+    "message": "This email account is already in use"
+  }
+}

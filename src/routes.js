@@ -1,6 +1,7 @@
 /** Controllers */
 const UserController = require('./controllers/UserController')
 const SetController = require('./controllers/SetController')
+const TestController = require('./controllers/TestController')
 
 /** Policies */
 const AuthenticationPolicy = require('./policies/AuthenticationPolicy')
@@ -19,14 +20,20 @@ module.exports = (app) => {
   )
 
   app.post('/auth',
+    authenticateToken,
     UserController.auth
   )
 
-  // app.post('/songs',
-  //   SongsController.add
-  // )
   app.get('/sets',
-    authenticateToken,
+    // authenticateToken,
     SetController.getPublicSets
+  )
+
+  app.post('/sets',
+    SetController.addSet
+  )
+
+  app.get('/test',
+    TestController.testGet
   )
 }

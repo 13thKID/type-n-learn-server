@@ -1,3 +1,4 @@
+/** node_modules */
 const stripJsonComments = require('strip-json-comments')
 const fs = require('fs')
 const path = require('path')
@@ -20,7 +21,10 @@ module.exports = (app) => {
         message: errorObject.message
       })
     } else {
-      console.log(new Error('Unknown error code'))
+      this.status(400).send({
+        error: 'validation-error',
+        message: code
+      })
     }
   }
 }

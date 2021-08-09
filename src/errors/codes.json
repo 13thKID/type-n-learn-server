@@ -18,12 +18,12 @@
     "message": "The error occured when trying to fetch the public sets"
   },
   /* Model: User */
-  "user-unknown-error": {
-    "status": 400,
-    "message": "The unknown error occured when trying to create a user"
+  "user-register-error": {
+    "status": 500,
+    "message": "The unknown error occured when trying to register a new user"
   },
-  "user-email-already-used": {
-    "status": 400,
-    "message": "This email account is already in use"
+  "user-create-error": {
+    "status": 500,
+    "message": "The unknown error occured when trying to create a new user"
   }
 }

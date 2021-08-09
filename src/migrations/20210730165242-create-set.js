@@ -12,20 +12,18 @@ module.exports = {
         allowNull: false
       },
       slug: {
-        type: Sequelize.STRING,
-        allowNull: false
+        type: Sequelize.STRING
       },
       description: {
         type: Sequelize.TEXT,
         allowNull: true
       },
       authorId: {
-        type: Sequelize.INTEGER,
-        allowNull: false
+        type: Sequelize.UUID
+        // allowNull: false
       },
       authorName: {
-        type: Sequelize.STRING,
-        allowNull: false
+        type: Sequelize.STRING
       },
       expressions: Sequelize.TEXT,
       public: Sequelize.BOOLEAN,

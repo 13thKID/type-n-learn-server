@@ -1,5 +1,7 @@
-const config = require('../config/config')
+const NODE_ENV = process.env.NODE_ENV || 'development'
+const config = require('../config/config')[NODE_ENV]
 
+/** node_modules */
 const bcrypt = require('bcrypt')
 const jwt = require('jsonwebtoken')
 const { pick } = require('lodash')
@@ -12,7 +14,7 @@ const hashString = (plainText) => {
 }
 
 const jwtSignUser = (user) => {
-  const userTrace = pick(user, ['id', 'email'])
+  const userTrace = pick(user, ['id', 'email', 'username', 'role'])
 
   return jwt.sign(userTrace, config.authentication.jwtSecret, {
     expiresIn: config.authentication.jwtExpires

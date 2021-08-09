@@ -1,0 +1,21 @@
+Created associations between Set and User
+
+1. Created an association between Set and User
+tables using 'authorId' property
+2. User's auto incremented ID changed to UUID type
+3. Created auto-generated 'slug' for the Set model
+which is created from the name given
+4. Upgraded validation: Now it can be viewed in two
+steps:
+  4.1 Via Policy-middleware, which must follow the 
+  model constraints
+  4.2 Via Sequelize and check for no duplicates
+5. Set seeder were upgraded with auto-populating 
+'authorId' field
+6. Config file was splitted into node-env modes
+7. Authentication middleware first step was finished:
+  Now, express automatically sends http-only cookie
+  to the client-side and accepts it via Auth-middleware.
+  If no cookie is in the header, authentication can be
+  done via token, passed in the auth-header 
+8. Configuration of the CORS policy

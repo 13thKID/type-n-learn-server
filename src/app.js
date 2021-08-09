@@ -1,20 +1,27 @@
+require('dotenv').config()
+
+const NODE_ENV = process.env.NODE_ENV || 'development'
+const config = require('./config/config')[NODE_ENV]
+
+/** node_modules */
 const express = require('express')
 const cors = require('cors')
-const bodyParser = require('body-parser')
 const morgan = require('morgan')
+const cookieParser = require('cookie-parser')
+
+/** models */
 const { sequelize } = require('./models')
-const config = require('./config/config.js')
+
+/** helpers */
 
 const app = express()
 
+app.use(express.json())
+app.use(cookieParser())
 app.use(morgan('combined'))
-app.use(bodyParser.json())
-app.use(cors({
-  credentials: true,
-  origin: 'http://localhost:8080',
-  allowedHeaders: ['Access-Control-Allow-Origin', 'Content-Type'],
-  optionsSuccessStatus: 200
-}))
+
+/* CORS configuration */
+app.use(cors(config.cors))
 
 require('./errors')(app)
 require('./routes')(app)

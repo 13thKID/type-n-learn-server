@@ -11,8 +11,8 @@ module.exports = (sequelize, DataTypes) => {
      * This method is not a part of Sequelize lifecycle.
      * The `models/index` file will call this method automatically.
      */
-    static associate (models) {
-      // define association here
+    static associate ({ User }) {
+      this.belongsTo(User, { foreignKey: 'authorId' })
     }
 
     toJSON () {
@@ -22,23 +22,28 @@ module.exports = (sequelize, DataTypes) => {
   Set.init({
     name: {
       type: DataTypes.STRING,
-      allowNull: false
+      allowNull: false,
+      set (value) {
+        this.setDataValue('name', value)
+        this.setDataValue('slug', slugify(value, {
+          lower: true
+        }))
+      }
     },
     slug: {
-      type: DataTypes.STRING,
-      allowNull: false
+      type: DataTypes.STRING
     },
     description: {
       type: DataTypes.TEXT,
       allowNull: true
     },
     authorId: {
-      type: DataTypes.INTEGER,
-      allowNull: false
+      type: DataTypes.UUID
+      // allowNull: false
     },
     authorName: {
-      type: DataTypes.STRING,
-      allowNull: false
+      type: DataTypes.STRING
+      // allowNull: true
     },
     expressions: DataTypes.TEXT,
     public: DataTypes.BOOLEAN

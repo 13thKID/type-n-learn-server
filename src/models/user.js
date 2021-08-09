@@ -1,4 +1,9 @@
+/** node_modules */
 const bcrypt = require('bcrypt')
+
+/** models */
+
+/** helpers */
 const { hashString } = require('../helpers/crypto')
 
 const hashPassword = (user, options) => {
@@ -21,16 +26,34 @@ module.exports = (sequelize, DataTypes) => {
      * This method is not a part of Sequelize lifecycle.
      * The `models/index` file will call this method automatically.
      */
-    static associate (models) {
-      // define association here
+    static associate ({ Set }) {
+      this.hasMany(Set, { foreignKey: 'authorId' })
     }
   };
   User.init({
+    id: {
+      type: DataTypes.UUID,
+      primaryKey: true,
+      defaultValue: DataTypes.UUIDV4
+    },
     email: {
       type: DataTypes.STRING,
+      allowNull: false,
       unique: true
     },
-    password: DataTypes.STRING
+    username: {
+      type: DataTypes.STRING,
+      allowNull: false,
+      unique: true
+    },
+    role: {
+      type: DataTypes.STRING,
+      allowNull: false
+    },
+    password: {
+      type: DataTypes.STRING,
+      allowNull: false
+    }
   }, {
     sequelize,
     tableName: 'user',

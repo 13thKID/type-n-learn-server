@@ -1,7 +1,7 @@
-const config = require('../config/config')
+const NODE_ENV = process.env.NODE_ENV || 'development'
+const config = require('../config/config')[NODE_ENV]
 
 /** node_modules */
-const jwt = require('jsonwebtoken')
 
 /** models */
 const { User } = require('../models')
@@ -12,7 +12,10 @@ const { jwtSignUser } = require('../helpers/crypto')
 module.exports = {
   async register (req, res) {
     try {
-      const user = await User.create(req.body)
+      const user = await User.create({
+        ...req.body,
+        role: 'user'
+      })
 
       if (!user) {
         res.throwError('user-create-error')
@@ -20,20 +23,22 @@ module.exports = {
 
       const token = jwtSignUser(user)
 
-      res.send({
-        user: user,
-        token: token
-      }).cookie(config.cookie.jwt.name, token, config.cookie.jwt.options)
+      res
+        .cookie(config.cookie.jwt.name, token, config.cookie.jwt.options)
+        .send({
+          user: user,
+          token: token
+        })
     } catch (err) {
-      if (err.errors[0].type === 'unique violation') {
-        switch (err.errors[0].path) {
-          case 'email':
-            res.throwError('user-email-already-used')
-            break
-          default: res.throwError('user-unknown-error')
+      if (err.errors) {
+        const error = err.errors[0]
+        if (error.type === 'unique violation') {
+          res.throwError(`This ${error.path} is already used. Choose a different one`)
+        } else {
+          res.throwError('user-register-error')
         }
       } else {
-        return res.throwError('user-unknown-error')
+        res.throwError('user-register-error')
       }
     }
   },
@@ -64,10 +69,12 @@ module.exports = {
 
       const token = jwtSignUser(user)
 
-      res.send({
-        user: user,
-        token: token
-      }).cookie(config.cookie.jwt.name, token, config.cookie.jwt.options)
+      res
+        .cookie(config.cookie.jwt.name, token, config.cookie.jwt.options)
+        .send({
+          user: user,
+          token: token
+        })
     } catch (err) {
       res.status(500).send({
         code: 'login-unknown-error',
@@ -76,16 +83,6 @@ module.exports = {
     }
   },
   async auth (req, res) {
-    const authHeader = req.headers.authorization
-    const token = authHeader && authHeader.split(' ')[1]
-    jwt.verify(token, config.authentication.jwtSecret, (err, user) => {
-      if (err) {
-        return res.status(403).send({
-          error: 'Token is invalid or has expired'
-        })
-      }
-
-      res.send(user)
-    })
+    res.send('Verification was successfull!')
   }
 }
